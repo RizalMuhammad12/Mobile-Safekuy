@@ -94,7 +94,7 @@ Jangan lupa kasih ⭐ (Star) buat repo ini kalau kamu ngerasa SafeKuy ngebantu k
 
 ## ⚖️ Lisensi & Hak Cipta
 
-Secara default, semua hak cipta atas kode dan konsep aplikasi ini adalah milik kreator (kamu). Dilarang keras menyalin, mendistribusikan, atau menggunakan kode dari repository ini untuk kepentingan komersial tanpa izin tertulis. **All Rights Reserved.**
+Secara default, semua hak cipta atas kode dan konsep aplikasi ini adalah milik kreator Rizal. Dilarang keras menyalin, mendistribusikan, atau menggunakan kode dari repository ini untuk kepentingan komersial tanpa izin tertulis. **All Rights Reserved.**
 
 ---
 <div align="center">
