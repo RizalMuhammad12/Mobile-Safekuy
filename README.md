@@ -94,7 +94,7 @@ Jangan lupa kasih ⭐ (Star) buat repo ini kalau kamu ngerasa SafeKuy ngebantu k
 
 ## ⚖️ Lisensi & Hak Cipta
 
-Secara default, semua hak cipta atas kode dan konsep aplikasi ini adalah milik kreator (kamu). Dilarang keras menyalin, mendistribusikan, atau menggunakan kode dari repository ini untuk kepentingan komersial tanpa izin tertulis. **All Rights Reserved.**
+Project ini didistribusikan di bawah lisensi **MIT License**. Kamu bebas untuk menggunakan, memodifikasi, dan mendistribusikan kode ini untuk keperluan belajar maupun personal, selama kamu mencantumkan kredit kepada kreator asli. Selengkapnya cek file [LICENSE](file:///d:/Semester%204/PPBO/SafeKuy/LICENSE).
 
 ---
 <div align="center">
