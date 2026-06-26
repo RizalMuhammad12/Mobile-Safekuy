@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Emerald (Primary) -->
-    <color name="emerald_50">#ECFDF5</color>
-    <color name="emerald_100">#D1FAE5</color>
-    <color name="emerald_400">#34D399</color>
-    <color name="emerald_500">#10B981</color>
-    <color name="emerald_600">#059669</color>
+    <!-- Emerald (Primary - Mint Green) -->
+    <color name="emerald_50">#F0FDF8</color>
+    <color name="emerald_100">#CCFBF1</color>
+    <color name="emerald_400">#38E5B6</color>
+    <color name="emerald_500">#3AD29F</color>
+    <color name="emerald_600">#24B889</color>
 
-    <!-- Indigo/Purple (AI Card) -->
-    <color name="indigo_500">#6366F1</color>
-    <color name="purple_600">#9333EA</color>
+    <!-- Indigo/Purple (Brand 'Kuy') -->
+    <color name="indigo_500">#7A5AF8</color>
+    <color name="purple_600">#6B4CE6</color>
 
     <!-- Red (Pengeluaran) -->
     <color name="red_50">#FEF2F2</color>
     <color name="red_500">#EF4444</color>
 
-    <!-- Slate (Text & Background) -->
+    <!-- Slate (Text & Background - Navy Tint) -->
     <color name="slate_50">#F8FAFC</color>
     <color name="slate_100">#F1F5F9</color>
     <color name="slate_200">#E2E8F0</color>
-    <color name="slate_400">#94A3B8</color>
-    <color name="slate_500">#64748B</color>
-    <color name="slate_700">#334155</color>
-    <color name="slate_800">#1E293B</color>
+    <color name="slate_400">#8E93B3</color>
+    <color name="slate_500">#70749E</color>
+    <color name="slate_700">#2A2F5E</color>
+    <color name="slate_800">#181C43</color>
 
     <!-- Yellow -->
     <color name="yellow_300">#FDE047</color>
