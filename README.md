@@ -94,5 +94,5 @@ Jangan lupa kasih ⭐ (Star) buat repo ini kalau kamu ngerasa SafeKuy ngebantu k
 
 ---
 <div align="center">
-  Dibuat dengan ☕ dan 💻 untuk masa depan finansial yang lebih cerah!
+  Dibuat oleh rizal tamvans dengan kekuatan promptingnya untuk masa depan finansial yang lebih asoyy
 </div>
