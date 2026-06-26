@@ -68,6 +68,7 @@ class AddTransactionActivity : AppCompatActivity() {
         val btnSubmit = findViewById<Button>(R.id.btnSubmit)
         val etAmount = findViewById<EditText>(R.id.etAmount)
         val etNote = findViewById<EditText>(R.id.etNote)
+        val etCategory = findViewById<EditText>(R.id.etCategory)
 
         btnBack.setOnClickListener { finish() }
 
@@ -85,6 +86,7 @@ class AddTransactionActivity : AppCompatActivity() {
         btnSubmit.setOnClickListener {
             val amountText = etAmount.text.toString()
             val note = etNote.text.toString()
+            val category = etCategory.text.toString()
 
             if (amountText.isBlank()) {
                 Toast.makeText(this, "Masukkan nominal!", Toast.LENGTH_SHORT).show()
@@ -98,8 +100,8 @@ class AddTransactionActivity : AppCompatActivity() {
             }
 
             viewModel.setSelectedDate(selectedDate)
-            viewModel.addManualTransaction(selectedType, amount, note.ifEmpty { selectedType.replaceFirstChar { it.uppercase() } })
-            Toast.makeText(this, "Transaksi berhasil disimpan!", Toast.LENGTH_SHORT).show()
+            viewModel.addManualTransaction(selectedType, amount, note.ifEmpty { selectedType.replaceFirstChar { it.uppercase() } }, category)
+            Toast.makeText(this, "Transaksi sedang disimpan...", Toast.LENGTH_SHORT).show()
             finish()
         }
     }

@@ -2,7 +2,8 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/slate_50">
+    android:background="@color/slate_50"
+    android:fitsSystemWindows="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -119,6 +120,27 @@
                 android:background="@color/slate_200"
                 android:layout_marginBottom="20dp"
                 android:layout_marginTop="-20dp" />
+
+            <!-- Category -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="KATEGORI (Opsional, kosongkan agar ditebak AI)"
+                android:textColor="@color/slate_500"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp" />
+
+            <EditText
+                android:id="@+id/etCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_toggle_group"
+                android:hint="Misal: Makanan, Transportasi"
+                android:inputType="text"
+                android:padding="16dp"
+                android:textSize="14sp"
+                android:layout_marginBottom="20dp" />
 
             <!-- Note -->
             <TextView

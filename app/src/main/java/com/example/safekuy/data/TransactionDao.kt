@@ -32,4 +32,14 @@ interface TransactionDao {
     
     @Query("SELECT SUM(amount) FROM transactions WHERE type = 'pengeluaran' AND date = :date")
     fun getTotalPengeluaranByDate(date: String): Flow<Double?>
+
+    @Query("SELECT category, emoji, SUM(amount) as totalAmount, COUNT(id) as transactionCount FROM transactions WHERE date = :date GROUP BY category ORDER BY totalAmount DESC")
+    fun getCategorySummariesByDate(date: String): Flow<List<CategorySummary>>
 }
+
+data class CategorySummary(
+    val category: String,
+    val emoji: String,
+    val totalAmount: Double,
+    val transactionCount: Int
+)

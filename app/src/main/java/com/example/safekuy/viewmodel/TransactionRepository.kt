@@ -46,11 +46,14 @@ class TransactionRepository(private val transactionDao: TransactionDao) {
             val prompt = """
                 Ekstrak data transaksi keuangan dari kalimat berikut ke dalam format JSON.
                 Tentukan apakah itu "pengeluaran" (misal: beli, bayar, tagihan) atau "pemasukan" (misal: gaji, dapat uang, jual).
+                Berikan juga "category" singkat (misal: Makanan, Transportasi, Hiburan, Tagihan, Belanja, Gaji, dll) dan satu karakter "emoji" yang merepresentasikan transaksi tersebut.
                 Format JSON:
                 {
                     "type": "pemasukan" atau "pengeluaran",
+                    "category": "<kategori>",
                     "amount": <angka>,
-                    "note": "<deskripsi singkat>"
+                    "note": "<deskripsi singkat>",
+                    "emoji": "<satu karakter emoji>"
                 }
                 
                 Kalimat: "$text"
@@ -64,15 +67,18 @@ class TransactionRepository(private val transactionDao: TransactionDao) {
             
             val jsonObject = org.json.JSONObject(jsonString)
             val type = jsonObject.optString("type", "pengeluaran").lowercase()
+            val category = jsonObject.optString("category", "Lainnya")
             val amount = jsonObject.optDouble("amount", 0.0)
             val note = jsonObject.optString("note", text)
+            val parsedEmoji = jsonObject.optString("emoji", if (type == "pemasukan") "📈" else "💸")
             
             val transaction = Transaction(
                 type = type,
+                category = category,
                 amount = amount,
                 note = note,
                 date = date,
-                emoji = if (type == "pemasukan") "📈" else "💸"
+                emoji = parsedEmoji
             )
             
             transactionDao.insert(transaction)

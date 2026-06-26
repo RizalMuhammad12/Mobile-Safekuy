@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey
 data class Transaction(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val type: String, // "pemasukan" or "pengeluaran"
+    val category: String, // Kategori transaksi
     val amount: Double,
     val note: String,
     val date: String, // Format YYYY-MM-DD

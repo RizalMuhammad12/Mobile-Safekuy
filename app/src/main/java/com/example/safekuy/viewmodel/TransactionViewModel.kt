@@ -26,6 +26,9 @@ class TransactionViewModel(application: Application) : AndroidViewModel(applicat
     private val _totalPengeluaran = MutableStateFlow(0.0)
     val totalPengeluaran: StateFlow<Double> = _totalPengeluaran.asStateFlow()
 
+    private val _categorySummaries = MutableStateFlow<List<com.example.safekuy.data.CategorySummary>>(emptyList())
+    val categorySummaries: StateFlow<List<com.example.safekuy.data.CategorySummary>> = _categorySummaries.asStateFlow()
+
     private val _selectedDate = MutableStateFlow(getCurrentDate())
     val selectedDate: StateFlow<String> = _selectedDate.asStateFlow()
 
@@ -67,18 +70,61 @@ class TransactionViewModel(application: Application) : AndroidViewModel(applicat
                 _totalPengeluaran.value = total ?: 0.0
             }
         }
+        viewModelScope.launch {
+            val db = AppDatabase.getDatabase(getApplication())
+            db.transactionDao().getCategorySummariesByDate(date).collectLatest { list ->
+                _categorySummaries.value = list
+            }
+        }
     }
 
-    fun addManualTransaction(type: String, amount: Double, note: String) {
+    fun addManualTransaction(type: String, amount: Double, note: String, categoryInput: String = "") {
         viewModelScope.launch {
-            val trx = Transaction(
-                type = type,
-                amount = amount,
-                note = note,
-                date = _selectedDate.value,
-                emoji = if (type == "pemasukan") "📈" else "💸"
-            )
-            repository.insertManual(trx)
+            _isLoading.value = true
+            try {
+                var finalCategory = categoryInput
+                var finalEmoji = if (type == "pemasukan") "📈" else "💸"
+
+                if (finalCategory.isBlank()) {
+                    // Opsi 3: Gunakan AI untuk menebak kategori jika kosong
+                    val generativeModel = com.google.ai.client.generativeai.GenerativeModel(
+                        modelName = "gemini-2.5-flash",
+                        apiKey = com.example.safekuy.BuildConfig.API_KEY,
+                        generationConfig = com.google.ai.client.generativeai.type.generationConfig {
+                            responseMimeType = "application/json"
+                        }
+                    )
+                    val prompt = """
+                        Tebak "category" singkat (1-2 kata, misal: Makanan, Transportasi, Hiburan, Tagihan, Belanja, Gaji, dll) dan satu karakter "emoji" untuk transaksi $type berikut dengan catatan: "$note".
+                        Format JSON:
+                        {
+                            "category": "<kategori>",
+                            "emoji": "<emoji>"
+                        }
+                    """.trimIndent()
+                    
+                    try {
+                        val response = generativeModel.generateContent(prompt)
+                        val jsonObject = org.json.JSONObject(response.text?.trim() ?: "{}")
+                        finalCategory = jsonObject.optString("category", "Lainnya")
+                        finalEmoji = jsonObject.optString("emoji", finalEmoji)
+                    } catch (e: Exception) {
+                        finalCategory = "Lainnya"
+                    }
+                }
+
+                val trx = com.example.safekuy.data.Transaction(
+                    type = type,
+                    category = finalCategory,
+                    amount = amount,
+                    note = note,
+                    date = _selectedDate.value,
+                    emoji = finalEmoji
+                )
+                repository.insertManual(trx)
+            } finally {
+                _isLoading.value = false
+            }
         }
     }
 
