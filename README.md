@@ -92,6 +92,10 @@ Punya ide brilian buat bikin SafeKuy makin kece? *Pull request* selalu terbuka l
 Kalo nemu *bug* atau mau ngasih masukan, langsung aja bikin **Issue** di repo ini. 
 Jangan lupa kasih ⭐ (Star) buat repo ini kalau kamu ngerasa SafeKuy ngebantu kamu!
 
+## ⚖️ Lisensi & Hak Cipta
+
+Secara default, semua hak cipta atas kode dan konsep aplikasi ini adalah milik kreator (kamu). Dilarang keras menyalin, mendistribusikan, atau menggunakan kode dari repository ini untuk kepentingan komersial tanpa izin tertulis. **All Rights Reserved.**
+
 ---
 <div align="center">
   Dibuat dengan ☕ dan 💻 untuk masa depan finansial yang lebih cerah!
