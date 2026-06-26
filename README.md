@@ -98,5 +98,5 @@ Secara default, semua hak cipta atas kode dan konsep aplikasi ini adalah milik k
 
 ---
 <div align="center">
-  Dibuat dengan ☕ dan 💻 untuk masa depan finansial yang lebih cerah!
+  Dibuat oleh rizal tamvans dengan kekuatan promptingnya untuk masa depan finansial yang lebih asoyy
 </div>
