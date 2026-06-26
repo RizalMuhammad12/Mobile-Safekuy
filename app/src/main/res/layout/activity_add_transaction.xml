@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/slate_50">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <!-- Header -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="24dp"
+            android:layout_marginTop="16dp">
+
+            <ImageButton
+                android:id="@+id/btnBack"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/bg_saldo_card"
+                android:elevation="2dp"
+                android:src="@android:drawable/ic_menu_revert"
+                android:scaleType="centerInside"
+                android:contentDescription="Back" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Catat Transaksi"
+                android:textColor="@color/slate_800"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="40dp"
+                android:layout_height="40dp" />
+        </LinearLayout>
+
+        <!-- Manual Form Card -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_saldo_card"
+            android:orientation="vertical"
+            android:padding="24dp"
+            android:elevation="2dp">
+
+            <!-- Type Toggle -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_toggle_group"
+                android:orientation="horizontal"
+                android:padding="4dp"
+                android:layout_marginBottom="24dp">
+
+                <TextView
+                    android:id="@+id/btnPengeluaran"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:paddingVertical="10dp"
+                    android:text="Pengeluaran"
+                    android:textColor="@color/red_500"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:background="@drawable/bg_saldo_card"
+                    android:elevation="2dp" />
+
+                <TextView
+                    android:id="@+id/btnPemasukan"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:paddingVertical="10dp"
+                    android:text="Pemasukan"
+                    android:textColor="@color/slate_500"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:background="@android:color/transparent" />
+            </LinearLayout>
+
+            <!-- Amount -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="NOMINAL (RP)"
+                android:textColor="@color/slate_500"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp" />
+
+            <EditText
+                android:id="@+id/etAmount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="0"
+                android:inputType="numberDecimal"
+                android:textColor="@color/slate_800"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:background="@null"
+                android:paddingBottom="8dp"
+                android:layout_marginBottom="20dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/slate_200"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="-20dp" />
+
+            <!-- Note -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CATATAN"
+                android:textColor="@color/slate_500"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp" />
+
+            <EditText
+                android:id="@+id/etNote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_toggle_group"
+                android:hint="Beli apa hari ini?"
+                android:inputType="text"
+                android:padding="16dp"
+                android:textSize="14sp"
+                android:layout_marginBottom="20dp" />
+
+            <!-- Date -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TANGGAL"
+                android:textColor="@color/slate_500"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:id="@+id/tvDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_toggle_group"
+                android:text="15 Juni 2026"
+                android:padding="16dp"
+                android:textSize="14sp"
+                android:textColor="@color/slate_700" />
+
+            <!-- Submit Button -->
+            <Button
+                android:id="@+id/btnSubmit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:backgroundTint="@color/slate_800"
+                android:text="SIMPAN TRANSAKSI"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:paddingVertical="14dp" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
