@@ -8,7 +8,10 @@
     <color name="emerald_600">#24B889</color>
 
     <!-- Indigo/Purple (Brand 'Kuy') -->
+    <color name="indigo_50">#EEF2FF</color>
+    <color name="indigo_100">#E0E7FF</color>
     <color name="indigo_500">#7A5AF8</color>
+    <color name="indigo_600">#5F3EE3</color>
     <color name="purple_600">#6B4CE6</color>
 
     <!-- Red (Pengeluaran) -->
@@ -21,8 +24,10 @@
     <color name="slate_200">#E2E8F0</color>
     <color name="slate_400">#8E93B3</color>
     <color name="slate_500">#70749E</color>
+    <color name="slate_600">#474B72</color>
     <color name="slate_700">#2A2F5E</color>
     <color name="slate_800">#181C43</color>
+    <color name="slate_900">#0B0D23</color>
 
     <!-- Yellow -->
     <color name="yellow_300">#FDE047</color>

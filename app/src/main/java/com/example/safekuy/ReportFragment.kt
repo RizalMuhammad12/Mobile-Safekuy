@@ -32,6 +32,7 @@ class ReportFragment : Fragment() {
         
         val viewModel = androidx.lifecycle.ViewModelProvider(requireActivity())[com.example.safekuy.viewmodel.TransactionViewModel::class.java]
         
+        val tvMonthPicker = view.findViewById<android.widget.TextView>(R.id.tvMonthPicker)
         val tvTotalPemasukan = view.findViewById<android.widget.TextView>(R.id.tvTotalPemasukanReport)
         val tvTotalPengeluaran = view.findViewById<android.widget.TextView>(R.id.tvTotalPengeluaranReport)
         val llReportContent = view.findViewById<android.widget.LinearLayout>(R.id.llReportContent)
@@ -54,26 +55,73 @@ class ReportFragment : Fragment() {
         
         val formatRp = java.text.NumberFormat.getNumberInstance(java.util.Locale("id", "ID"))
 
+        tvMonthPicker.setOnClickListener {
+            val calendar = java.util.Calendar.getInstance()
+            try {
+                val currentMonth = viewModel.selectedMonth.value
+                val parts = currentMonth.split("-")
+                if (parts.size == 2) {
+                    calendar.set(java.util.Calendar.YEAR, parts[0].toInt())
+                    calendar.set(java.util.Calendar.MONTH, parts[1].toInt() - 1)
+                }
+            } catch (e: Exception) {}
+
+            val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_month_picker, null)
+            val monthPicker = dialogView.findViewById<android.widget.NumberPicker>(R.id.monthPicker)
+            val yearPicker = dialogView.findViewById<android.widget.NumberPicker>(R.id.yearPicker)
+            
+            monthPicker.minValue = 1
+            monthPicker.maxValue = 12
+            monthPicker.value = calendar.get(java.util.Calendar.MONTH) + 1
+            monthPicker.displayedValues = arrayOf("Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Ags", "Sep", "Okt", "Nov", "Des")
+            
+            yearPicker.minValue = 2020
+            yearPicker.maxValue = 2050
+            yearPicker.value = calendar.get(java.util.Calendar.YEAR)
+            
+            androidx.appcompat.app.AlertDialog.Builder(requireContext())
+                .setTitle("Pilih Bulan")
+                .setView(dialogView)
+                .setPositiveButton("Pilih") { _, _ ->
+                    val year = yearPicker.value
+                    val month = String.format("%02d", monthPicker.value)
+                    viewModel.setSelectedMonth("$year-$month")
+                }
+                .setNegativeButton("Batal", null)
+                .show()
+        }
+
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             launch {
-                viewModel.totalPemasukan.collect { total ->
+                viewModel.selectedMonth.collect { monthStr ->
+                    try {
+                        val parts = monthStr.split("-")
+                        val year = parts[0]
+                        val monthNames = arrayOf("Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Ags", "Sep", "Okt", "Nov", "Des")
+                        val monthIndex = parts[1].toInt() - 1
+                        tvMonthPicker.text = "${monthNames[monthIndex]} $year"
+                    } catch (e: Exception) {
+                        tvMonthPicker.text = monthStr
+                    }
+                }
+            }
+            launch {
+                viewModel.monthlyTotalPemasukan.collect { total ->
                     tvTotalPemasukan?.text = "Rp ${formatRp.format(total)}"
                 }
             }
             launch {
-                viewModel.totalPengeluaran.collect { total ->
+                viewModel.monthlyTotalPengeluaran.collect { total ->
                     tvTotalPengeluaran?.text = "Rp ${formatRp.format(total)}"
                 }
             }
             launch {
-                viewModel.categorySummaries.collect { summaries ->
+                viewModel.monthlyCategorySummaries.collect { summaries ->
                     categoryAdapter.updateData(summaries)
                     
-                    // Update PieChart
                     if (summaries.isNotEmpty()) {
                         val entries = ArrayList<PieEntry>()
                         for (summary in summaries) {
-                            // Cuma tampilkan di pie chart jika nominal > 0
                             if (summary.totalAmount > 0) {
                                 entries.add(PieEntry(summary.totalAmount.toFloat(), summary.category))
                             }
@@ -81,7 +129,6 @@ class ReportFragment : Fragment() {
                         
                         val dataSet = PieDataSet(entries, "Kategori")
                         
-                        // Buat daftar warna
                         val colors = ArrayList<Int>()
                         for (c in ColorTemplate.MATERIAL_COLORS) colors.add(c)
                         for (c in ColorTemplate.VORDIPLOM_COLORS) colors.add(c)
@@ -96,7 +143,7 @@ class ReportFragment : Fragment() {
                         
                         val data = PieData(dataSet)
                         pieChart.data = data
-                        pieChart.invalidate() // refresh
+                        pieChart.invalidate() 
                         pieChart.visibility = View.VISIBLE
                     } else {
                         pieChart.visibility = View.GONE
@@ -104,7 +151,7 @@ class ReportFragment : Fragment() {
                 }
             }
             launch {
-                viewModel.transactions.collect { list ->
+                viewModel.monthlyTransactions.collect { list ->
                     if (list.isEmpty()) {
                         llReportContent?.visibility = View.GONE
                         llReportEmpty?.visibility = View.VISIBLE

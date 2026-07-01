@@ -38,19 +38,44 @@ class TransactionViewModel(application: Application) : AndroidViewModel(applicat
     private val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
 
+    private val _selectedMonth = MutableStateFlow(getCurrentMonth())
+    val selectedMonth: StateFlow<String> = _selectedMonth.asStateFlow()
+
+    private val _monthlyTransactions = MutableStateFlow<List<Transaction>>(emptyList())
+    val monthlyTransactions: StateFlow<List<Transaction>> = _monthlyTransactions.asStateFlow()
+
+    private val _monthlyTotalPemasukan = MutableStateFlow(0.0)
+    val monthlyTotalPemasukan: StateFlow<Double> = _monthlyTotalPemasukan.asStateFlow()
+
+    private val _monthlyTotalPengeluaran = MutableStateFlow(0.0)
+    val monthlyTotalPengeluaran: StateFlow<Double> = _monthlyTotalPengeluaran.asStateFlow()
+
+    private val _monthlyCategorySummaries = MutableStateFlow<List<com.example.safekuy.data.CategorySummary>>(emptyList())
+    val monthlyCategorySummaries: StateFlow<List<com.example.safekuy.data.CategorySummary>> = _monthlyCategorySummaries.asStateFlow()
+
     init {
         val transactionDao = AppDatabase.getDatabase(application).transactionDao()
         repository = TransactionRepository(transactionDao)
         loadDataForSelectedDate()
+        loadDataForSelectedMonth()
     }
 
     private fun getCurrentDate(): String {
         return SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
     }
 
+    private fun getCurrentMonth(): String {
+        return SimpleDateFormat("yyyy-MM", Locale.getDefault()).format(Date())
+    }
+
     fun setSelectedDate(date: String) {
         _selectedDate.value = date
         loadDataForSelectedDate()
+    }
+
+    fun setSelectedMonth(month: String) {
+        _selectedMonth.value = month
+        loadDataForSelectedMonth()
     }
 
     private fun loadDataForSelectedDate() {
@@ -74,6 +99,31 @@ class TransactionViewModel(application: Application) : AndroidViewModel(applicat
             val db = AppDatabase.getDatabase(getApplication())
             db.transactionDao().getCategorySummariesByDate(date).collectLatest { list ->
                 _categorySummaries.value = list
+            }
+        }
+    }
+    
+    private fun loadDataForSelectedMonth() {
+        val month = _selectedMonth.value
+        viewModelScope.launch {
+            repository.getTransactionsByMonth(month).collectLatest { list ->
+                _monthlyTransactions.value = list
+            }
+        }
+        viewModelScope.launch {
+            repository.getTotalPemasukanByMonth(month).collectLatest { total ->
+                _monthlyTotalPemasukan.value = total ?: 0.0
+            }
+        }
+        viewModelScope.launch {
+            repository.getTotalPengeluaranByMonth(month).collectLatest { total ->
+                _monthlyTotalPengeluaran.value = total ?: 0.0
+            }
+        }
+        viewModelScope.launch {
+            val db = AppDatabase.getDatabase(getApplication())
+            db.transactionDao().getCategorySummariesByMonth("$month%").collectLatest { list ->
+                _monthlyCategorySummaries.value = list
             }
         }
     }

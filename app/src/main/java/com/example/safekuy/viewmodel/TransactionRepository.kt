@@ -21,6 +21,18 @@ class TransactionRepository(private val transactionDao: TransactionDao) {
         return transactionDao.getTotalPengeluaranByDate(date)
     }
 
+    fun getTransactionsByMonth(monthPrefix: String): Flow<List<Transaction>> {
+        return transactionDao.getTransactionsByMonth("$monthPrefix%")
+    }
+
+    fun getTotalPemasukanByMonth(monthPrefix: String): Flow<Double?> {
+        return transactionDao.getTotalPemasukanByMonth("$monthPrefix%")
+    }
+
+    fun getTotalPengeluaranByMonth(monthPrefix: String): Flow<Double?> {
+        return transactionDao.getTotalPengeluaranByMonth("$monthPrefix%")
+    }
+
     suspend fun insertManual(transaction: Transaction) {
         transactionDao.insert(transaction)
     }

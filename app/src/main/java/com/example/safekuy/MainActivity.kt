@@ -35,6 +35,10 @@ class MainActivity : AppCompatActivity() {
                     loadFragment(ProfileFragment())
                     true
                 }
+                R.id.nav_split -> {
+                    loadFragment(SplitFragment())
+                    true
+                }
                 else -> false
             }
         }

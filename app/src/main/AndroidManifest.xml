@@ -28,6 +28,18 @@
             android:windowSoftInputMode="adjustResize"
             android:exported="false" />
 
+        <activity
+            android:name=".SplitHistoryActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".SplitStatsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".SplitSettingsActivity"
+            android:exported="false" />
+
         <!-- Register App Widget -->
         <receiver
             android:name=".SafeKuyWidgetProvider"

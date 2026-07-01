@@ -12,6 +12,9 @@ interface TransactionDao {
     @Query("SELECT * FROM transactions ORDER BY date DESC, id DESC")
     fun getAllTransactions(): Flow<List<Transaction>>
 
+    @Query("SELECT * FROM transactions WHERE date LIKE :monthPrefix ORDER BY date DESC, id DESC")
+    fun getTransactionsByMonth(monthPrefix: String): Flow<List<Transaction>>
+    
     @Query("SELECT * FROM transactions WHERE date = :date ORDER BY id DESC")
     fun getTransactionsByDate(date: String): Flow<List<Transaction>>
 
@@ -27,6 +30,15 @@ interface TransactionDao {
     @Query("DELETE FROM transactions")
     suspend fun deleteAll()
     
+    @Query("SELECT SUM(amount) FROM transactions WHERE type = 'pemasukan' AND date LIKE :monthPrefix")
+    fun getTotalPemasukanByMonth(monthPrefix: String): Flow<Double?>
+    
+    @Query("SELECT SUM(amount) FROM transactions WHERE type = 'pengeluaran' AND date LIKE :monthPrefix")
+    fun getTotalPengeluaranByMonth(monthPrefix: String): Flow<Double?>
+
+    @Query("SELECT category, emoji, SUM(amount) as totalAmount, COUNT(id) as transactionCount FROM transactions WHERE date LIKE :monthPrefix GROUP BY category ORDER BY totalAmount DESC")
+    fun getCategorySummariesByMonth(monthPrefix: String): Flow<List<CategorySummary>>
+
     @Query("SELECT SUM(amount) FROM transactions WHERE type = 'pemasukan' AND date = :date")
     fun getTotalPemasukanByDate(date: String): Flow<Double?>
     
